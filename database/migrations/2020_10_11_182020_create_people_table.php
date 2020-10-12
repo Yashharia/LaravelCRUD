@@ -19,6 +19,7 @@ class CreatePeopleTable extends Migration
             $table->string('mobile_number');
             $table->string('email');
             $table->text('description');
+
             $table->timestamps();
         });
     }

@@ -59,6 +59,8 @@
                                 <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $people->description }}</textarea>
                             </div>
                         </div>
+                        <input type="hidden" name="created_by" id="" value="{{$sessionID}}">
+
                         <div class="col-xs-12 col-sm-12 col-md-12 ">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

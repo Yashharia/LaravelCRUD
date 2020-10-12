@@ -12,9 +12,11 @@ class PeopleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $peoples = People::latest()->get();
+        $sessionID =  $request->user()->id;
+
+        $peoples = People::latest()->where('created_by', $sessionID)->get();
         return view('dashboard', compact("peoples"));
     }
 
@@ -23,9 +25,10 @@ class PeopleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('create');
+        $sessionID =  $request->user()->id;
+        return view('create', compact('sessionID'));
     }
 
     /**
@@ -41,6 +44,7 @@ class PeopleController extends Controller
             'mobile_number' => 'required',
             'email' => 'required',
             'description' => 'required',
+            'created_by' => 'required',
         ]);
 
         People::create($request->all());
@@ -65,9 +69,10 @@ class PeopleController extends Controller
      * @param  \App\Models\People  $people
      * @return \Illuminate\Http\Response
      */
-    public function edit(People $people)
+    public function edit(People $people, Request $request)
     {
-        return view('edit', compact('people'));
+        $sessionID =  $request->user()->id;
+        return view('edit', compact('people', 'sessionID'));
     }
 
     /**
@@ -84,6 +89,8 @@ class PeopleController extends Controller
             'mobile_number' => 'required',
             'email' => 'required',
             'description' => 'required',
+            'created_by' => 'required',
+
         ]);
 
         $people->update($request->all());
